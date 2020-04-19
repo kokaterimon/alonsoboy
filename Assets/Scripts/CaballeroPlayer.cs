@@ -8,6 +8,15 @@ public class CaballeroPlayer : MonoBehaviour{
     public float maxVelocidad;
     Animator caballeroAnim;
 
+    bool puedeMover = true;
+
+    //Saltar
+    bool enSuelo = false;
+    float checkearRadioSuelo = 0.2f;
+    public LayerMask capaSuelo;
+    public Transform checkearSuelo;
+    public float poderSalto;
+
     //Voltear caballero
     bool voltearCaballero = true;
     SpriteRenderer caballeroRender;
@@ -23,6 +32,12 @@ public class CaballeroPlayer : MonoBehaviour{
     // Update is called once per frame
     void Update()
     {
+
+        if (puedeMover && enSuelo && Input.GetAxis("Jump") > 0)
+        {
+            caballeroAnim.SetBool("estaEnSuelo", false);
+        }
+
         float mover = Input.GetAxis("Horizontal");
 
         if(mover > 0 && !voltearCaballero)
