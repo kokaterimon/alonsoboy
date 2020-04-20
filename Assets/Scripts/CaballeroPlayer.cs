@@ -36,17 +36,31 @@ public class CaballeroPlayer : MonoBehaviour{
         if (puedeMover && enSuelo && Input.GetAxis("Jump") > 0)
         {
             caballeroAnim.SetBool("estaEnSuelo", false);
+            caballeroRB.velocity = new Vector2(caballeroRB.velocity.x, 0f);
+            caballeroRB.AddForce(new Vector2(0, poderSalto), ForceMode2D.Impulse);
+            enSuelo = false;
         }
+
+        enSuelo = Physics2D.OverlapCircle(checkearSuelo.position, checkearRadioSuelo, capaSuelo);
+        caballeroAnim.SetBool("estaEnSuelo", enSuelo);
 
         float mover = Input.GetAxis("Horizontal");
 
-        if(mover > 0 && !voltearCaballero)
+        if (puedeMover)
         {
-            Voltear();
-        }else if(mover <0 && voltearCaballero)
+            if (mover > 0 && !voltearCaballero)
+            {
+                Voltear();
+            }
+            else if (mover < 0 && voltearCaballero)
+            {
+                Voltear();
+            }
+        }else
         {
-            Voltear();
-        }
+
+        }    
+
 
 
         caballeroRB.velocity = new Vector2(mover * maxVelocidad, caballeroRB.velocity.y);
@@ -60,6 +74,4 @@ public class CaballeroPlayer : MonoBehaviour{
         voltearCaballero = !voltearCaballero;
            caballeroRender.flipX = !caballeroRender.flipX;
     }
-
-
 }
