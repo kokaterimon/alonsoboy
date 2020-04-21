@@ -56,17 +56,19 @@ public class CaballeroPlayer : MonoBehaviour{
             {
                 Voltear();
             }
-        }else
-        {
 
+            caballeroRB.velocity = new Vector2(mover * maxVelocidad, caballeroRB.velocity.y);
+
+            //Hacer que caballero corra
+            caballeroAnim.SetFloat("VelMovimiento", Mathf.Abs(mover));
+        }
+        else
+        {
+            caballeroRB.velocity = new Vector2(0, caballeroRB.velocity.y);
+
+            caballeroAnim.SetFloat("VelMovimiento", 0);
         }    
 
-
-
-        caballeroRB.velocity = new Vector2(mover * maxVelocidad, caballeroRB.velocity.y);
-
-        //Hacer que caballero corra
-        caballeroAnim.SetFloat("VelMovimiento", Mathf.Abs(mover));
     }
 
     void Voltear()
@@ -74,4 +76,10 @@ public class CaballeroPlayer : MonoBehaviour{
         voltearCaballero = !voltearCaballero;
            caballeroRender.flipX = !caballeroRender.flipX;
     }
+
+    public void togglePuedeMover()
+    {
+        puedeMover = !puedeMover;
+    }
+
 }
